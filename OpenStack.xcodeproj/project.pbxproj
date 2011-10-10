@@ -9,12 +9,6 @@
 /* Begin PBXBuildFile section */
 		1D3623260D0F684500981E51 /* OpenStackAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* OpenStackAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
-		240FE694143CB03A00A60E6C /* ASICloudFilesContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 240FE689143CB03A00A60E6C /* ASICloudFilesContainer.m */; };
-		240FE695143CB03A00A60E6C /* ASICloudFilesContainerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 240FE68B143CB03A00A60E6C /* ASICloudFilesContainerRequest.m */; };
-		240FE696143CB03A00A60E6C /* ASICloudFilesContainerXMLParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 240FE68D143CB03A00A60E6C /* ASICloudFilesContainerXMLParserDelegate.m */; };
-		240FE697143CB03A00A60E6C /* ASICloudFilesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 240FE68F143CB03A00A60E6C /* ASICloudFilesObject.m */; };
-		240FE698143CB03A00A60E6C /* ASICloudFilesObjectRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 240FE691143CB03A00A60E6C /* ASICloudFilesObjectRequest.m */; };
-		240FE699143CB03A00A60E6C /* ASICloudFilesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 240FE693143CB03A00A60E6C /* ASICloudFilesRequest.m */; };
 		24A18E22143DB870003232F1 /* EditMetadataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A18E20143DB870003232F1 /* EditMetadataViewController.m */; };
 		24A18E23143DB870003232F1 /* EditMetadataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24A18E21143DB870003232F1 /* EditMetadataViewController.xib */; };
 		24A18E56143F0429003232F1 /* FolderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A18E54143F0428003232F1 /* FolderDetailViewController.m */; };
@@ -1082,18 +1076,6 @@
 		1D3623240D0F684500981E51 /* OpenStackAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenStackAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* OpenStackAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenStackAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* OpenStack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenStack.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		240FE688143CB03A00A60E6C /* ASICloudFilesContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICloudFilesContainer.h; sourceTree = "<group>"; };
-		240FE689143CB03A00A60E6C /* ASICloudFilesContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASICloudFilesContainer.m; sourceTree = "<group>"; };
-		240FE68A143CB03A00A60E6C /* ASICloudFilesContainerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICloudFilesContainerRequest.h; sourceTree = "<group>"; };
-		240FE68B143CB03A00A60E6C /* ASICloudFilesContainerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASICloudFilesContainerRequest.m; sourceTree = "<group>"; };
-		240FE68C143CB03A00A60E6C /* ASICloudFilesContainerXMLParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICloudFilesContainerXMLParserDelegate.h; sourceTree = "<group>"; };
-		240FE68D143CB03A00A60E6C /* ASICloudFilesContainerXMLParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASICloudFilesContainerXMLParserDelegate.m; sourceTree = "<group>"; };
-		240FE68E143CB03A00A60E6C /* ASICloudFilesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICloudFilesObject.h; sourceTree = "<group>"; };
-		240FE68F143CB03A00A60E6C /* ASICloudFilesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASICloudFilesObject.m; sourceTree = "<group>"; };
-		240FE690143CB03A00A60E6C /* ASICloudFilesObjectRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICloudFilesObjectRequest.h; sourceTree = "<group>"; };
-		240FE691143CB03A00A60E6C /* ASICloudFilesObjectRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASICloudFilesObjectRequest.m; sourceTree = "<group>"; };
-		240FE692143CB03A00A60E6C /* ASICloudFilesRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICloudFilesRequest.h; sourceTree = "<group>"; };
-		240FE693143CB03A00A60E6C /* ASICloudFilesRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASICloudFilesRequest.m; sourceTree = "<group>"; };
 		24A18E1F143DB86F003232F1 /* EditMetadataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMetadataViewController.h; sourceTree = "<group>"; };
 		24A18E20143DB870003232F1 /* EditMetadataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMetadataViewController.m; sourceTree = "<group>"; };
 		24A18E21143DB870003232F1 /* EditMetadataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditMetadataViewController.xib; sourceTree = "<group>"; };
@@ -1863,25 +1845,6 @@
 				277D9D10126E77A6002C69D9 /* Rackspace Cloud.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		240FE686143CB01B00A60E6C /* ASICloudFiles */ = {
-			isa = PBXGroup;
-			children = (
-				240FE688143CB03A00A60E6C /* ASICloudFilesContainer.h */,
-				240FE689143CB03A00A60E6C /* ASICloudFilesContainer.m */,
-				240FE68A143CB03A00A60E6C /* ASICloudFilesContainerRequest.h */,
-				240FE68B143CB03A00A60E6C /* ASICloudFilesContainerRequest.m */,
-				240FE68C143CB03A00A60E6C /* ASICloudFilesContainerXMLParserDelegate.h */,
-				240FE68D143CB03A00A60E6C /* ASICloudFilesContainerXMLParserDelegate.m */,
-				240FE68E143CB03A00A60E6C /* ASICloudFilesObject.h */,
-				240FE68F143CB03A00A60E6C /* ASICloudFilesObject.m */,
-				240FE690143CB03A00A60E6C /* ASICloudFilesObjectRequest.h */,
-				240FE691143CB03A00A60E6C /* ASICloudFilesObjectRequest.m */,
-				240FE692143CB03A00A60E6C /* ASICloudFilesRequest.h */,
-				240FE693143CB03A00A60E6C /* ASICloudFilesRequest.m */,
-			);
-			name = ASICloudFiles;
 			sourceTree = "<group>";
 		};
 		2713172012F0AAD100C2D4D1 /* Icons */ = {
@@ -2698,7 +2661,6 @@
 		2798A8B0125E614C00E02475 /* ASIHttpRequest */ = {
 			isa = PBXGroup;
 			children = (
-				240FE686143CB01B00A60E6C /* ASICloudFiles */,
 				27CD1DC5129DBFC8006507BB /* ASIAuthenticationDialog.h */,
 				27CD1DC6129DBFC8006507BB /* ASIAuthenticationDialog.m */,
 				27CD1DC7129DBFC8006507BB /* ASICacheDelegate.h */,
@@ -4241,12 +4203,6 @@
 				2726C64E13B28D1000BC7330 /* ConfigureLoadBalancerViewController.m in Sources */,
 				27DADC1613B94D6C00F9E906 /* LBNodeViewController.m in Sources */,
 				27DC5DD813CB8F0F00091902 /* LoadBalancerConnectionThrottle.m in Sources */,
-				240FE694143CB03A00A60E6C /* ASICloudFilesContainer.m in Sources */,
-				240FE695143CB03A00A60E6C /* ASICloudFilesContainerRequest.m in Sources */,
-				240FE696143CB03A00A60E6C /* ASICloudFilesContainerXMLParserDelegate.m in Sources */,
-				240FE697143CB03A00A60E6C /* ASICloudFilesObject.m in Sources */,
-				240FE698143CB03A00A60E6C /* ASICloudFilesObjectRequest.m in Sources */,
-				240FE699143CB03A00A60E6C /* ASICloudFilesRequest.m in Sources */,
 				24A18E22143DB870003232F1 /* EditMetadataViewController.m in Sources */,
 				24A18E56143F0429003232F1 /* FolderDetailViewController.m in Sources */,
 			);
