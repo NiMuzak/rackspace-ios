@@ -54,7 +54,6 @@
 #pragma mark JSON
 
 + (StorageObject *)fromJSON:(NSDictionary *)dict {
-    
     StorageObject *object = [[[StorageObject alloc] init] autorelease];
     
     object.name = [dict objectForKey:@"name"]; // this may be shortened by folder parsing later
@@ -64,6 +63,14 @@
     object.contentType = [dict objectForKey:@"content_type"];
     object.lastModified = [ComputeModel dateFromString:[dict objectForKey:@"last_modified"]];
     
+    object.metadata = [NSMutableDictionary dictionary];
+    for (NSString *key in dict) {
+        if ([key hasPrefix:@"x_object_meta_"]) {
+            NSString *metadataKey = [key substringFromIndex:14];
+            [object.metadata setObject:[dict objectForKey:key] forKey:metadataKey];
+        }
+    }
+        
     return object;
 }
 

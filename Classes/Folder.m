@@ -13,7 +13,7 @@
 
 @implementation Folder
 
-@synthesize name, parent, folders, objects;
+@synthesize name, parent, folders, objects, metadata;
 
 + (id)folder {
 	Folder *folder = [[[self alloc] init] autorelease];
@@ -92,6 +92,7 @@
                 Folder *folder = [[Folder alloc] init];
                 folder.name = object.name;
                 folder.parent = self;
+                folder.metadata = object.metadata;    
                 [self.folders setObject:folder forKey:folder.name];
                 [folder release];
             } else {
@@ -109,6 +110,8 @@
             folder.name = folderName;
             folder.parent = self;
             folder.objects = files;
+            StorageObject *object = [objs objectForKey:folderName];
+            folder.metadata = object.metadata;
             [self.folders setObject:folder forKey:folder.name];
             [folder release];
         }
@@ -121,6 +124,7 @@
 
 - (NSArray *)sortedContents {
     NSMutableArray *contents = [[NSMutableArray alloc] initWithArray:[self.folders allValues]];
+    
     [contents addObjectsFromArray:[self.objects allValues]];
     if (!sortedContents || [sortedContents count] != [contents count]) {
         sortedContents = [[NSArray alloc] initWithArray:[contents sortedArrayUsingSelector:@selector(compare:)]];

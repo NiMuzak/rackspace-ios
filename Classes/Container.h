@@ -16,6 +16,9 @@
 	NSString *name;
 	NSUInteger count;
 	unsigned long long bytes;
+    
+    // metadata
+    NSMutableDictionary *metadata;
 
     // TODO: wade having trouble with directories without markers: user_files/12345/wade.jpg
 	
@@ -40,6 +43,7 @@
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, assign) NSUInteger count;
 @property (nonatomic, assign) unsigned long long bytes;
+@property (nonatomic, retain) NSMutableDictionary *metadata;
 
 -(NSString *)humanizedSize;
 

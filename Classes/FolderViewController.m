@@ -20,6 +20,7 @@
 #import "AddObjectViewController.h"
 #import "OpenStackAppDelegate.h"
 #import "RootViewController.h"
+#import "FolderDetailViewController.h"
 
 
 @implementation FolderViewController
@@ -37,6 +38,7 @@
     [super viewDidLoad];
     [self addAddButton];
     deleteActionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to delete this folder?  This operation cannot be undone." delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete Folder" otherButtonTitles:nil];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -130,10 +132,9 @@
         
         id item = [self.folder.sortedContents objectAtIndex:indexPath.row];    
         cell.textLabel.text = [item name];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         if ([[item class] isEqual:[Folder class]]) {
-            
+            cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
             cell.imageView.image = [UIImage imageNamed:@"folder-icon.png"];
             
             NSString *folderString = @"";
@@ -150,6 +151,8 @@
             }
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@", folderString, objectString];
         } else if ([[item class] isEqual:[StorageObject class]]) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
             StorageObject *object = item;
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -213,6 +216,20 @@
             [vc release];
         }
     }
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    Folder *folderForDetailView;
+    if ([folder.sortedContents count] > 0) {
+        folderForDetailView = [self.folder.sortedContents objectAtIndex:indexPath.row];
+    }
+    FolderDetailViewController *vc = [[FolderDetailViewController alloc] initWithNibName:@"FolderDetailViewController" bundle:nil];
+    vc.account = account;
+    vc.container = container;
+    vc.folder = folderForDetailView;
+
+    [self.navigationController pushViewController:vc animated:YES];
+    [vc release];
 }
 
 #pragma mark -

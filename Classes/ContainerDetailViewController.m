@@ -16,14 +16,16 @@
 #import "ReferrerACLViewController.h"
 #import "UserAgentACLViewController.h"
 #import "ContainersViewController.h"
+#import "EditMetadataViewController.h"
 #import "Folder.h"
 
 #define kOverview 0
-#define kCDNAccess 1
-#define kCDNAttributes 2
-#define kLogRetention 3
-#define kReferrerACL 4
-#define kUserAgentACL 5
+#define kMetadata 1
+#define kCDNAccess 2
+#define kCDNAttributes 3
+#define kLogRetention 4
+#define kReferrerACL 5
+#define kUserAgentACL 6
 
 /*
  #define kOverview 0
@@ -98,7 +100,7 @@
     cdnURLActionSheet = [[UIActionSheet alloc] initWithTitle:container.cdnURL delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Copy to Pasteboard", nil];
     deleteActionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to delete this container?  This operation cannot be undone." delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete Container" otherButtonTitles:nil];
     
-    deleteSection = container.cdnEnabled ? 6 : 2;
+    deleteSection = container.cdnEnabled ? 7 : 3;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -110,6 +112,7 @@
     }
     originalTTL = container.ttl;
     [self setBackgroundView];
+    [self.tableView reloadData];
 }
 
 #pragma mark -
@@ -214,9 +217,9 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.container) {
         if (transitioning) {
-            return container.cdnEnabled ? 3 : 7;
+            return container.cdnEnabled ? 4 : 8;
         } else {
-            return container.cdnEnabled ? 7 : 3;
+            return container.cdnEnabled ? 8 : 4;
         }
     } else {
         return 0;
@@ -229,6 +232,8 @@
         return 1;
     } else if (section == kOverview) {
         return 2;
+    } else if (section == kMetadata) {
+        return 1 + [container.metadata count];
     } else if (section == kCDNAccess) {
         return 1;
     } else if (section == kCDNAttributes) {
@@ -342,6 +347,18 @@
             cell.textLabel.text = @"Size";
             cell.detailTextLabel.text = [container humanizedSize];
         }
+    } else if (indexPath.section == kMetadata) {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        cell.accessoryView = nil;
+        if (indexPath.row == [container.metadata count]) {
+            cell.textLabel.text = @"Add Metadata";
+            cell.detailTextLabel.text = @"";
+        } else {
+            NSString *key = [[container.metadata allKeys] objectAtIndex:indexPath.row];
+            cell.textLabel.text = key;
+            cell.detailTextLabel.text = [container.metadata objectForKey:key];
+        }
     } else if (indexPath.section == kCDNAccess) {
         cell.textLabel.text = @"Publish to CDN";
         cell.detailTextLabel.text = @"";
@@ -392,7 +409,35 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == deleteSection) {
+    
+    if (indexPath.section == kMetadata) {
+        EditMetadataViewController *vc = [[EditMetadataViewController alloc] initWithNibName:@"EditMetadataViewController" bundle:nil];
+        NSString *metadataKey;
+        NSString *metadataValue;
+        
+        if (indexPath.row == [self.container.metadata count]) {
+            metadataKey = @"";
+            metadataValue = @"";
+        }
+        else {
+            metadataKey = [[self.container.metadata allKeys] objectAtIndex:indexPath.row];
+            metadataValue = [self.container.metadata objectForKey:metadataKey];
+        }
+        
+        StorageObject *object = [[[StorageObject alloc] init] autorelease];
+        object.name = container.name;
+        object.metadata = container.metadata;
+        object.fullPath = @"";
+        
+        vc.metadataKey = metadataKey;
+        vc.metadataValue = metadataValue;
+        vc.account = account;
+        vc.container = container;
+        vc.object = object;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+        [vc release];
+    } else if (indexPath.section == deleteSection) {
         if (self.container.count == 0 || ([self.container.rootFolder.folders count] + [self.container.rootFolder.objects count] == 0)) {
             [deleteActionSheet showInView:self.view];
         }

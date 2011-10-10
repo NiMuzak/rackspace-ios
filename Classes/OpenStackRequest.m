@@ -171,6 +171,7 @@ static NSRecursiveLock *accessDetailsLock = nil;
     return [OpenStackRequest request:account method:method url:url];
 }
 
+
 #pragma mark -
 #pragma mark Auth Retry
 
@@ -226,7 +227,7 @@ static NSRecursiveLock *accessDetailsLock = nil;
 }
 
 - (void)failWithError:(NSError *)theError {
-
+    
     if (responseStatusCode == 401 && ![url isEqual:account.provider.authEndpointURL]) {
         // auth is expired, so get a fresh token
         if (account) {
@@ -620,6 +621,7 @@ static NSRecursiveLock *accessDetailsLock = nil;
 - (NSMutableDictionary *)objects {
     SBJSON *parser = [[SBJSON alloc] init];
     NSArray *jsonObjects = [parser objectWithString:[self responseString]];
+
     NSMutableDictionary *objects = [[[NSMutableDictionary alloc] initWithCapacity:[jsonObjects count]] autorelease];
     
     for (int i = 0; i < [jsonObjects count]; i++) {
@@ -653,8 +655,27 @@ static NSRecursiveLock *accessDetailsLock = nil;
 }
 
 + (OpenStackRequest *)writeObjectMetadataRequest:(OpenStackAccount *)account container:(Container *)container object:(StorageObject *)object {
-    return nil;
+
+    NSString *fullPath = object.fullPath;
+    if ([fullPath length] != 0 && [fullPath characterAtIndex:0] == '/') {
+        fullPath = [fullPath substringFromIndex:1];
+    }
+
+    NSString *metadataKeyHeaderPrefix;
+    if ([fullPath length] == 0)
+        metadataKeyHeaderPrefix = @"X-Container-Meta-";
+    else
+        metadataKeyHeaderPrefix = @"X-Object-Meta-";
+        
+    OpenStackRequest *request = [OpenStackRequest filesRequest:account method:@"POST" path:[[NSString stringWithFormat:@"/%@/%@", container.name, fullPath] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]; 
+    
+    for (NSString *metadataKey in object.metadata) {
+        NSString *metadataKeyHeader = [NSString stringWithFormat:@"%@%@", metadataKeyHeaderPrefix, metadataKey]; 
+        [request.requestHeaders setObject:[object.metadata objectForKey:metadataKey] forKey:metadataKeyHeader];
+    }
+    return request;
 }
+
 
 + (OpenStackRequest *)deleteObjectRequest:(OpenStackAccount *)account container:(Container *)container object:(StorageObject *)object {
     if ([object.fullPath characterAtIndex:0] == '/') {
