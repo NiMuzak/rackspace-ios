@@ -23,6 +23,8 @@
 	NSMutableDictionary *folders;
 	NSMutableDictionary *objects;
     NSArray *sortedContents;
+    
+    NSMutableDictionary *metadata;
 }
 
 @property (nonatomic, retain) NSString *name;
@@ -30,6 +32,7 @@
 @property (nonatomic, retain) NSMutableDictionary *folders;
 @property (nonatomic, retain) NSMutableDictionary *objects;
 @property (readonly, retain) NSArray *sortedContents;
+@property (nonatomic, retain) NSMutableDictionary *metadata;
 
 + (id)folder;
 - (NSArray *)sortedContents;

@@ -17,6 +17,7 @@
 
 // regular container attributes
 @synthesize name, count, bytes;
+@synthesize metadata;
 
 // CDN container attributes
 @synthesize cdnEnabled, ttl, cdnURL, logRetention, referrerACL, useragentACL, rootFolder;
@@ -75,12 +76,20 @@
 #pragma mark JSON
 
 + (Container *)fromJSON:(NSDictionary *)dict {
-    
     Container *container = [[[Container alloc] init] autorelease];
     
     // regular attributes
     container.name = [dict objectForKey:@"name"];
     
+    // metadata
+    container.metadata = [NSMutableDictionary dictionary];
+    for (NSString *key in dict) {
+        if ([key hasPrefix:@"x_container_meta_"]) {
+            NSString *metadataKey = [key substringFromIndex:17];
+            [container.metadata setObject:[dict objectForKey:key] forKey:metadataKey];
+        }
+    }
+
     // if count is in here, we're parsing from the object storage API
     if ([dict objectForKey:@"count"]) {
         container.count = [[dict objectForKey:@"count"] intValue];

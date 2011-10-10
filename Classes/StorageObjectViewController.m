@@ -18,9 +18,10 @@
 #import "FolderViewController.h"
 #import "UIColor+MoreColors.h"
 #import "OpenStackAppDelegate.h"
+#import "EditMetadataViewController.h"
 
 #define kDetails 0
-#define kMetadata -1
+#define kMetadata 1
 
 // TODO: use etag to reset download
 // TODO: try downloading directly to the file to save memory.  don't use object.data
@@ -85,6 +86,10 @@
     [super viewWillAppear:animated];
     self.navigationItem.title = object.name;
     
+    NSIndexPath*	selection = [self.tableView indexPathForSelectedRow];
+	if (selection)
+		[self.tableView deselectRowAtIndexPath:selection animated:YES];
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];        
     NSString *shortPath = [NSString stringWithFormat:@"/%@/%@", self.container.name, self.object.fullPath];
@@ -103,13 +108,13 @@
     
     [self setBackgroundView];
     if (self.container.cdnEnabled) {
-        cdnURLSection = 1;
-        actionsSection = 2;
-        deleteSection = 3;
+        cdnURLSection = 2;
+        actionsSection = 3;
+        deleteSection = 4;
     } else {
         cdnURLSection = -1;
-        actionsSection = 1;
-        deleteSection = 2;
+        actionsSection = 2;
+        deleteSection = 3;
     }
     
     // let's see if we can tweet
@@ -122,13 +127,14 @@
         cdnURLActionSheet = [[UIActionSheet alloc] initWithTitle:[[NSString stringWithFormat:@"%@/%@", self.container.cdnURL, self.object.fullPath] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Copy to Pasteboard", @"Open in Safari", @"Email Link to File", nil];
     }
     
+    [self.tableView reloadData];
 }
 
 #pragma mark -
 #pragma mark Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.container.cdnEnabled ? 4 : 3;
+    return self.container.cdnEnabled ? 5 : 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -300,7 +306,28 @@
 }
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == cdnURLSection) {
+    if (indexPath.section == kMetadata) {
+        EditMetadataViewController *vc = [[EditMetadataViewController alloc] initWithNibName:@"EditMetadataViewController" bundle:nil];
+        NSString *metadataKey;
+        NSString *metadataValue;
+        
+        if (indexPath.row == [self.object.metadata count]) {
+            metadataKey = @"";
+            metadataValue = @"";
+        }
+        else {
+            metadataKey = [[self.object.metadata allKeys] objectAtIndex:indexPath.row];
+            metadataValue = [self.object.metadata objectForKey:metadataKey];
+        }
+
+        vc.metadataKey = metadataKey;
+        vc.metadataValue = metadataValue;
+        vc.account = account;
+        vc.container = container;
+        vc.object = object;
+        [self.navigationController pushViewController:vc animated:YES];
+        [vc release];
+    } else if (indexPath.section == cdnURLSection) {
         [cdnURLActionSheet showInView:self.view];
     } else if (indexPath.section == actionsSection) {
         if (indexPath.row == 0) {

@@ -515,8 +515,9 @@
         NSMutableDictionary *objects = [request objects];
         container.rootFolder = [Folder folder];
         container.rootFolder.objects = objects;
+        NSLog(@"rootfolder, name: %@",container.rootFolder.name);
         [self.account persist];
-
+        
         NSNotification *notification = [NSNotification notificationWithName:@"getObjectsSucceeded" object:self.account userInfo:[NSDictionary dictionaryWithObject:container forKey:@"container"]];
         [[NSNotificationCenter defaultCenter] postNotification:notification];
     } else {
@@ -637,14 +638,16 @@
 
 - (void)writeObjectMetadataSucceeded:(OpenStackRequest *)request {
     if ([request isSuccess]) {
+        NSNotification *notification = [NSNotification notificationWithName:@"writeObjectMetadataSucceeded" object:[request.userInfo objectForKey:@"object"] userInfo:[NSDictionary dictionaryWithObject:request forKey:@"request"]];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
     } else {
-        NSNotification *notification = [NSNotification notificationWithName:@"getObjectsFailed" object:self.account userInfo:[NSDictionary dictionaryWithObject:request forKey:@"request"]];
+        NSNotification *notification = [NSNotification notificationWithName:@"writeObjectMetadataFailed" object:[request.userInfo objectForKey:@"object"] userInfo:[NSDictionary dictionaryWithObject:request forKey:@"request"]];
         [[NSNotificationCenter defaultCenter] postNotification:notification];
     }
 }
 
 - (void)writeObjectMetadataFailed:(OpenStackRequest *)request {
-    NSNotification *notification = [NSNotification notificationWithName:@"writeObjectMetadataFailed" object:self.account userInfo:[NSDictionary dictionaryWithObject:request forKey:@"request"]];
+    NSNotification *notification = [NSNotification notificationWithName:@"writeObjectMetadataFailed" object:[request.userInfo objectForKey:@"object"] userInfo:[NSDictionary dictionaryWithObject:request forKey:@"request"]];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
